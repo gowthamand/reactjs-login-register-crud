@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import Index from "./pages/index";
 import AddPage from "./pages/add";
+import EditPage from "./pages/edit";
 
 class App extends Component {
 
@@ -15,6 +16,7 @@ class App extends Component {
                     <Route path='/dashboard' component={ Dashboard } />
                     <Route path='/index' component={ Index } />
                     <Route path='/add' component={ AddPage } />
+                    <Route path='/edit/' component={ EditPage } />
                 </Router>
             </div>
         );
