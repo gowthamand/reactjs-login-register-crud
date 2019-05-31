@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
-
+import { Redirect } from 'react-router-dom';
 
 export default class Login extends Component {
 
@@ -30,7 +29,9 @@ export default class Login extends Component {
         bodyFormData.set('password', password);
         axios.post(url, bodyFormData)
             .then(result => {
-                if (result.status) {
+                console.log(result.data.token);
+                if (result.data.status) {
+                    localStorage.setItem('token', result.data.token);
                     this.setState({redirect: true, isLoading: false})
                 }
             })
@@ -38,13 +39,6 @@ export default class Login extends Component {
                 console.log(error);
             });
     };
-
-    componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/users')
-            .then(response => {
-            })
-    }
-
 
     renderRedirect = () => {
         if (this.state.redirect) {
@@ -56,45 +50,49 @@ export default class Login extends Component {
         const isLoading = this.state.isLoading;
         return (
             <div className="container">
-                <div className="row">
-                    <aside className="col-md-4">&nbsp;</aside>
-                    <aside className="col-md-4">
-                        <div className="card">
-                            <article className="card-body">
-                                <button className="float-right btn btn-outline-primary">Sign up</button>
-                                <h4 className="card-title mb-4 mt-1">Sign in</h4>
-                                <form onSubmit={this.handleSubmit}>
-                                    <div className="form-group">
-                                        <label>Your email</label>
-                                        <input className="form-control" placeholder="Email" type="email" name="email" onChange={this.handleEmailChange} required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <Link to={'/create'} className="float-right">Forgot?</Link>
-                                        <label>Your password</label>
-                                        <input className="form-control" placeholder="******" type="password" name="password" onChange={this.handlePwdChange} required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="checkbox">
-                                            <label> <input type="checkbox"/> Save password </label>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <button className="btn btn-success btn-block" type="submit" disabled={this.state.isLoading ? true : false}>Login &nbsp;&nbsp;&nbsp;
-                                            {isLoading ? (
-                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                            ) : (
-                                                <span></span>
-                                            )}
-                                        </button>
-                                    </div>
-                                </form>
-                            </article>
+                <div className="card card-login mx-auto mt-5">
+                    <div className="card-header">Login</div>
+                    <div className="card-body">
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group">
+                                <div className="form-label-group">
+                                    <input className="form-control" id="inputEmail" placeholder="Email address" type="email" name="email" onChange={this.handleEmailChange} autoFocus required/>
+                                    <label htmlFor="inputEmail">Email address</label>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <div className="form-label-group">
+                                    <input type="password" id="inputPassword" className="form-control" placeholder="******"  name="password" onChange={this.handlePwdChange} required/>
+                                    <label htmlFor="inputPassword">Password</label>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <div className="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="remember-me" />Remember Password
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <button className="btn btn-primary btn-block" type="submit" disabled={this.state.isLoading ? true : false}>Login &nbsp;&nbsp;&nbsp;
+                                    {isLoading ? (
+                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    ) : (
+                                        <span></span>
+                                    )}
+                                </button>
+                            </div>
+                        </form>
+                        <div className="text-center">
+                            <a className="d-block small mt-3" href="register.html">Register an Account</a>
+                            <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
                         </div>
-                        {this.renderRedirect()}
-                    </aside>
+                    </div>
                 </div>
+                {this.renderRedirect()}
             </div>
         );
     }
 }
+
 
