@@ -12,7 +12,6 @@ export default class Index extends Component {
 
     constructor(props) {
         super(props);
-        // this.onMove = this.onMove.bind(this);
         this.url = 'https://gowtham-rest-api-crud.herokuapp.com/employees';
         this.token = localStorage.getItem('token');
     }
