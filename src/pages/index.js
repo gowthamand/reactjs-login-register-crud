@@ -82,7 +82,7 @@ export default class Index extends Component {
                                                     <td className="text-center">
                                                         <Link className="btn btn-sm btn-info" to={{ pathname: 'edit', search: '?id=' + employees.id }}>Edit</Link>
                                                         &nbsp; | &nbsp;
-                                                        <button value={employees.id} className="btn btn-sm btn-danger" onClick={this.handleClickDelete} >Delete</button>
+                                                        <button value={employees.id} className="btn btn-sm btn-danger" disabled={ index === 0  ? true : false} onClick={this.handleClickDelete} >Delete</button>
                                                     </td>
                                                 </tr>)
                                             }
