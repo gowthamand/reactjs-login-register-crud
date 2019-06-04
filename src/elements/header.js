@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 
 export default class Header extends Component {
+
+    constructor(props) {
+        super(props);
+        this.handleClickLogout = this.handleClickLogout.bind(this)
+    }
+
+    state = {
+        toDashboard: false,
+    };
+
+    handleClickLogout(){
+        localStorage.removeItem('token');
+        localStorage.setItem('isLoggedIn', false);
+        this.setState({ toDashboard: true });
+    }
+
+
+
     render() {
+        if (this.state.toDashboard === true) {
+            return <Redirect to='/' />
+        }
         return (
             <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
 
@@ -36,11 +57,10 @@ export default class Header extends Component {
                             <Link to={'#'} className="dropdown-item">Settings</Link>
                             <Link to={'#'} className="dropdown-item">Activity Log</Link>
                             <div className="dropdown-divider"></div>
-                            <Link to={'#'} className="dropdown-item" data-toggle="modal" data-target="#logoutModal">Logout</Link>
+                            <Link to={'#'} onClick={this.handleClickLogout} className="dropdown-item" data-toggle="modal" data-target="#logoutModal">Logout</Link>
                         </div>
                     </li>
                 </ul>
-
             </nav>
         );
     }

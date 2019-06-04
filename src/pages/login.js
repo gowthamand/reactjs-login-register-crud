@@ -32,7 +32,8 @@ export default class Login extends Component {
                 console.log(result.data.token);
                 if (result.data.status) {
                     localStorage.setItem('token', result.data.token);
-                    this.setState({redirect: true, isLoading: false})
+                    this.setState({redirect: true, isLoading: false});
+                    localStorage.setItem('isLoggedIn', true);
                 }
             })
             .catch(error => {

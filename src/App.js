@@ -8,13 +8,21 @@ import EditPage from "./pages/edit";
 
 class App extends Component {
 
+    constructor(props){
+        super(props);
+    }
+
+
+
     render() {
+        const token = localStorage.getItem('token');
+        const login = localStorage.getItem('isLoggedIn');
         return (
             <div className="App">
                 <Router>
                     <Route exact path='/' component={ Login } />
                     <Route path='/dashboard' component={ Dashboard } />
-                    <Route path='/index' component={ Index } />
+                    <Route path='/index'  component={ Index } />
                     <Route path='/add' component={ AddPage } />
                     <Route path='/edit/' component={ EditPage } />
                 </Router>
