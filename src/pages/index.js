@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Header from "../elements/header";
 import Sidebar from "../elements/sidebar";
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 export default class Index extends Component {
     state = {
         employees: [],
+        toDashboard: false,
         isLoading: false
     };
 
@@ -23,6 +24,7 @@ export default class Index extends Component {
                 this.setState({ employees });
             })
             .catch(error => {
+                this.setState({ toDashboard: true });
                 console.log(error);
             });
     }
@@ -33,9 +35,16 @@ export default class Index extends Component {
                 this.componentDidMount();
                 this.setState({ isLoading: true})
             })
+            .catch( error => {
+                console.log(error.toString());
+                this.setState({ toDashboard: true });
+            });
     };
 
     render() {
+        if (this.state.toDashboard === true) {
+            return <Redirect to='/' />
+        }
         return (
             <div>
                 <Header/>

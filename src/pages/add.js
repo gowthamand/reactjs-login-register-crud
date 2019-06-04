@@ -8,6 +8,7 @@ export default class AddPage extends Component {
 
     state = {
         redirect: false,
+        toDashboard: false,
         isLoading: false
     };
 
@@ -38,6 +39,7 @@ export default class AddPage extends Component {
                 }
             })
             .catch(error => {
+                this.setState({ toDashboard: true });
                 console.log(error);
             });
     };
@@ -50,6 +52,9 @@ export default class AddPage extends Component {
 
     render() {
         const isLoading = this.state.isLoading;
+        if (this.state.toDashboard === true) {
+            return <Redirect to='/' />
+        }
         return (
             <div>
                 <Header/>

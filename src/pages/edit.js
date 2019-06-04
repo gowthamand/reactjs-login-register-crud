@@ -32,6 +32,7 @@ export default class EditPage extends Component {
                 document.getElementById('inputComp').value = emp.name;
             })
             .catch(error => {
+                this.setState({ toDashboard: true });
                 console.log(error);
             });
         
@@ -48,23 +49,14 @@ export default class EditPage extends Component {
         const location = document.getElementById('inputLoca').value;
         const empid = document.getElementById('inputEmpId').value;
         const company = document.getElementById('inputComp').value;
-    console.log(this.state.id);
-        // let bodyFormData = new FormData();
-        // bodyFormData.set('name', name);
-        // bodyFormData.set('phone', phone);
-        // bodyFormData.set('email', email);
-        // bodyFormData.set('location', location);
-        // bodyFormData.set('emp_id', empid);
-        // bodyFormData.set('company', company);
-        // bodyFormData.set('token', token);
         axios.put(url, { name: name, phone: phone, email:email, location:location, emp_id:empid, company:company, token:token })
             .then(result => {
-                console.log(result);
                 if (result.data.status) {
                     this.setState({redirect: true, isLoading: false})
                 }
             })
             .catch(error => {
+                this.setState({ toDashboard: true });
                 console.log(error);
             });
     };
@@ -77,6 +69,9 @@ export default class EditPage extends Component {
 
     render() {
         const isLoading = this.state.isLoading;
+        if (this.state.toDashboard === true) {
+            return <Redirect to='/' />
+        }
         return (
             <div>
                 <Header/>
