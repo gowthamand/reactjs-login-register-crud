@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 export default class Login extends Component {
 
@@ -8,6 +8,7 @@ export default class Login extends Component {
         email: '',
         password: '',
         redirect: false,
+        authError: false,
         isLoading: false
     };
 
@@ -37,6 +38,7 @@ export default class Login extends Component {
             })
             .catch(error => {
                 console.log(error);
+                this.setState({ authError: true, isLoading: false });
             });
     };
 
@@ -56,14 +58,20 @@ export default class Login extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">
                                 <div className="form-label-group">
-                                    <input className="form-control" id="inputEmail" placeholder="Email address" type="email" name="email" onChange={this.handleEmailChange} autoFocus required/>
+                                    <input className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputEmail" placeholder="Email address" type="text" name="email" onChange={this.handleEmailChange} autoFocus required/>
                                     <label htmlFor="inputEmail">Email address</label>
+                                    <div className="invalid-feedback">
+                                        Please provide a valid Email.
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-group">
                                 <div className="form-label-group">
-                                    <input type="password" id="inputPassword" className="form-control" placeholder="******"  name="password" onChange={this.handlePwdChange} required/>
+                                    <input type="password" className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputPassword" placeholder="******"  name="password" onChange={this.handlePwdChange} required/>
                                     <label htmlFor="inputPassword">Password</label>
+                                    <div className="invalid-feedback">
+                                        Please provide a valid Password.
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -84,7 +92,8 @@ export default class Login extends Component {
                             </div>
                         </form>
                         <div className="text-center">
-                            <a className="d-block small mt-3" href="register.html">Register an Account</a>
+                            <a className="" href="register.html"></a>
+                            <Link className="d-block small mt-3" to={'register'}>Register an Account</Link>
                             <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
                         </div>
                     </div>

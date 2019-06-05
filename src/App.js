@@ -5,6 +5,7 @@ import Dashboard from "./pages/dashboard";
 import Index from "./pages/index";
 import AddPage from "./pages/add";
 import EditPage from "./pages/edit";
+import Register from "./pages/register";
 
 class App extends Component {
 
@@ -15,14 +16,13 @@ class App extends Component {
 
 
     render() {
-        const token = localStorage.getItem('token');
-        const login = localStorage.getItem('isLoggedIn');
         return (
             <div className="App">
                 <Router>
                     <Route exact path='/' component={ Login } />
                     <Route path='/dashboard' component={ Dashboard } />
                     <Route path='/index'  component={ Index } />
+                    <Route path='/register'  component={ Register } />
                     <Route path='/add' component={ AddPage } />
                     <Route path='/edit/' component={ EditPage } />
                 </Router>
