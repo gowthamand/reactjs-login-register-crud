@@ -5,11 +5,12 @@ import {Link, Redirect} from 'react-router-dom';
 export default class Register extends Component {
 
     state = {
+        name: '',
         email: '',
         password: '',
         redirect: false,
         authError: false,
-        isLoading: false
+        isLoading: false,
     };
 
     handleEmailChange = event => {
@@ -18,6 +19,9 @@ export default class Register extends Component {
     handlePwdChange = event => {
         this.setState({ password: event.target.value });
     };
+    handleNameChange = event => {
+        this.setState({ name: event.target.value });
+    };
 
     handleSubmit = event => {
         event.preventDefault();
@@ -25,15 +29,18 @@ export default class Register extends Component {
         const url = 'https://gowtham-rest-api-crud.herokuapp.com/register';
         const email = this.state.email;
         const password = this.state.password;
+        const name = this.state.name;
         let bodyFormData = new FormData();
         bodyFormData.set('email', email);
+        bodyFormData.set('name', name);
         bodyFormData.set('password', password);
         axios.post(url, bodyFormData)
             .then(result => {
-                if (result.data.status) {
-                    localStorage.setItem('token', result.data.token);
-                    this.setState({redirect: true, isLoading: false});
-                    localStorage.setItem('isLoggedIn', true);
+                this.setState({isLoading: false});
+                if (result.data.status !== 'fail') {
+                    this.setState({redirect: true, authError: true});
+                }else {
+                    this.setState({redirect: false, authError: true});
                 }
             })
             .catch(error => {
@@ -44,7 +51,7 @@ export default class Register extends Component {
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to='/dashboard' />
+            return <Redirect to="/" />
         }
     };
 
@@ -52,48 +59,33 @@ export default class Register extends Component {
         const isLoading = this.state.isLoading;
         return (
             <div className="container">
-                <div className="card card-register mx-auto mt-5">
-                    <div className="card-header">Register an Account</div>
+                <div className="card card-login mx-auto mt-5">
+                    <div className="card-header">Register</div>
                     <div className="card-body">
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">
-                                <div className="form-row">
-                                    <div className="col-md-6">
-                                        <div className="form-label-group">
-                                            <input type="text" id="firstName" className="form-control" placeholder="First name" required="required" autoFocus="autofocus" />
-                                            <label htmlFor="firstName">First name</label>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-label-group">
-                                            <input type="text" id="lastName" className="form-control" placeholder="Last name" required="required" />
-                                            <label htmlFor="lastName">Last name</label>
-                                        </div>
+                                <div className="form-label-group">
+                                    <input type="text" id="inputName" className="form-control" placeholder="name"  name="name" onChange={this.handleNameChange} required/>
+                                    <label htmlFor="inputName">Name</label>
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <div className="form-label-group">
+                                    <input id="inputEmail" className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputEmail" placeholder="Email address" type="text" name="email" onChange={this.handleEmailChange} autoFocus required/>
+                                    <label htmlFor="inputEmail">Email address</label>
+                                    <div className="invalid-feedback">
+                                        Please provide a valid Email. or Email Exis
                                     </div>
                                 </div>
                             </div>
                             <div className="form-group">
                                 <div className="form-label-group">
-                                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required="required" />
-                                    <label htmlFor="inputEmail">Email address</label>
+                                    <input type="password" className="form-control" id="inputPassword" placeholder="******"  name="password" onChange={this.handlePwdChange} required/>
+                                    <label htmlFor="inputPassword">Password</label>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="form-row">
-                                    <div className="col-md-6">
-                                        <div className="form-label-group">
-                                            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="required" />
-                                            <label htmlFor="inputPassword">Password</label>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-label-group">
-                                            <input type="password" id="confirmPassword" className="form-control" placeholder="Confirm password" required="required" />
-                                            <label htmlFor="confirmPassword">Confirm password</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div className="form-group">
                                 <button className="btn btn-primary btn-block" type="submit" disabled={this.state.isLoading ? true : false}>Register &nbsp;&nbsp;&nbsp;
                                     {isLoading ? (
@@ -105,8 +97,8 @@ export default class Register extends Component {
                             </div>
                         </form>
                         <div className="text-center">
-                            <Link className="d-block small mt-3" to={'/'}>Login Page</Link>
-                            <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
+                            <Link className="d-block small mt-3" to={''}>Login Your Account</Link>
+                            <Link className="d-block small" to={'#'}>Forgot Password?</Link>
                         </div>
                     </div>
                 </div>
