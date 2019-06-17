@@ -72,7 +72,7 @@ export default class Register extends Component {
 
                             <div className="form-group">
                                 <div className="form-label-group">
-                                    <input id="inputEmail" className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputEmail" placeholder="Email address" type="text" name="email" onChange={this.handleEmailChange} autoFocus required/>
+                                    <input id="inputEmail" className={"form-control " + (this.state.authError ? 'is-invalid' : '')} placeholder="Email address" type="text" name="email" onChange={this.handleEmailChange} autoFocus required/>
                                     <label htmlFor="inputEmail">Email address</label>
                                     <div className="invalid-feedback">
                                         Please provide a valid Email. or Email Exis

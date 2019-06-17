@@ -100,7 +100,6 @@ export default class Login extends Component {
                             </div>
                         </form>
                         <div className="text-center">
-                            <a className="" href="register.html"></a>
                             <Link className="d-block small mt-3" to={'register'}>Register an Account</Link>
                             <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
                         </div>
