@@ -26,7 +26,6 @@ class NotFound extends Component {
                                 <a onClick={this.props.history.goBack}>go back</a>
                                 to the previous page, or
                                 <Link to={'/dashboard'}>return home</Link>.</p>
-
                         </div>
 
                         <footer className="sticky-footer">
