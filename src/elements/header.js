@@ -19,8 +19,6 @@ export default class Header extends Component {
         this.setState({ toDashboard: true });
     }
 
-
-
     render() {
         if (this.state.toDashboard === true) {
             return <Redirect to='/' />

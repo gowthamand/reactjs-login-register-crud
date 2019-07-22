@@ -17,7 +17,7 @@ export default class FileUploadPage extends Component {
     state = {
         files: [],
         redirect: false,
-        isLoading: false
+        isLoading: false,
     };
 
     componentDidMount() {
@@ -41,8 +41,7 @@ export default class FileUploadPage extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        this.setState({isLoading: false});
-
+        this.setState({isLoading: true});
         let bodyFormData = new FormData();
         bodyFormData.append('file', this.file);
         bodyFormData.set('token', this.token);
@@ -53,11 +52,13 @@ export default class FileUploadPage extends Component {
             .then(result => {
                 if (result.data.status) {
                     this.componentDidMount();
-                    this.setState({redirect: true, isLoading: false})
+                    this.setState({redirect: true, isLoading: false});
+                    document.getElementById('fileInput').value = "";
+                    document.getElementById('fileLabel').innerHTML = "Choose file";
                 }
             })
             .catch(error => {
-                // this.setState({ toDashboard: true });
+                this.setState({ toDashboard: true });
                 console.log(error);
             });
     };
@@ -73,14 +74,17 @@ export default class FileUploadPage extends Component {
     };
 
     handleClickDelete = event => {
-        axios.delete(this.url + 'filedelete/' + event.target.value , { params: { token: this.token}})
+        const id = event.target.value;
+        document.getElementById('delete' + id).classList.remove('d-none');
+        const preview = document.querySelectorAll ('.delete' + id);
+        preview[0].setAttribute("disabled", true);
+        axios.delete(this.url + 'filedelete/' + id , { params: { token: this.token}})
             .then(response => {
                 this.componentDidMount();
-                this.setState({ isLoading: true})
             })
             .catch( error => {
                 console.log(error.toString());
-                this.setState({ toDashboard: true });
+                this.componentDidMount();
             });
     };
 
@@ -156,7 +160,9 @@ export default class FileUploadPage extends Component {
                                                 <Moment format="YYYY-MM-DD">{files.created_at}</Moment>
                                             </td>
                                             <td className="text-center">
-                                                <button value={files.id} className="btn btn-sm btn-danger" onClick={this.handleClickDelete} >Delete</button>
+                                                <button value={files.id}  className={'btn btn-sm btn-danger delete' + files.id } onClick={this.handleClickDelete} >Delete &nbsp;&nbsp;&nbsp;
+                                                        <span className="spinner-border spinner-border-sm d-none" id={'delete'+files.id} role="status" aria-hidden="true"></span>
+                                                </button>
                                             </td>
                                         </tr>)
                                     }
