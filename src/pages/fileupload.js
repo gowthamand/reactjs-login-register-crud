@@ -3,36 +3,31 @@ import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
 import Header from "../elements/header";
 import Sidebar from "../elements/sidebar";
+import Moment from 'react-moment';
 
 export default class FileUploadPage extends Component {
 
     constructor(props) {
         super(props);
         this.file = '';
-        this.url = 'https://gowtham-rest-api-crud.herokuapp.com/fileupload/';
+        this.url = 'https://gowtham-rest-api-crud.herokuapp.com/';
         this.token = localStorage.getItem('token');
     }
 
     state = {
-        id: '',
+        files: [],
         redirect: false,
         isLoading: false
     };
 
     componentDidMount() {
-        axios.get(this.url, { params: { token: this.token}})
+        axios.get(this.url + 'fileupload', { params: { token: this.token}})
             .then(response => {
-                const emp = response.data.employee;
-                this.setState({id: emp.id });
-                document.getElementById('inputName').value = emp.name;
-                document.getElementById('inputPhone').value = emp.phone;
-                document.getElementById('inputEmail').value = emp.email;
-                document.getElementById('inputLoca').value = emp.location;
-                document.getElementById('inputEmpId').value = emp.emp_id;
-                document.getElementById('inputComp').value = emp.name;
+                const files = response.data.data.files;
+                this.setState({ files: files });
             })
             .catch(error => {
-                // this.setState({ toDashboard: true });
+                this.setState({ toDashboard: true });
                 console.log(error);
             });
 
@@ -47,35 +42,17 @@ export default class FileUploadPage extends Component {
     handleSubmit = event => {
         event.preventDefault();
         this.setState({isLoading: false});
-        // const name = document.getElementById('inputName').value;
-        // const phone = document.getElementById('inputPhone').value;
-        // const email = document.getElementById('inputEmail').value;
-        // const location = document.getElementById('inputLoca').value;
-        // const empid = document.getElementById('inputEmpId').value;
-        // const company = document.getElementById('inputComp').value;
-
-        // axios.post(url, formData, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //     }
-        // }).then(result => {
-        //     if (result.data.status) {
-        //         this.setState({redirect: true, isLoading: false})
-        //     }
-        // }).catch(error => {
-        //     // this.setState({ toDashboard: true });
-        //     console.log(error);
-        // });
 
         let bodyFormData = new FormData();
-        bodyFormData.append('image', this.file);
+        bodyFormData.append('file', this.file);
         bodyFormData.set('token', this.token);
-        axios.post(this.url, bodyFormData, {
+        axios.post(this.url + 'fileupload', bodyFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }})
             .then(result => {
                 if (result.data.status) {
+                    this.componentDidMount();
                     this.setState({redirect: true, isLoading: false})
                 }
             })
@@ -91,8 +68,20 @@ export default class FileUploadPage extends Component {
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to='/dashboard' />
+            return <Redirect to='/fileupload' />
         }
+    };
+
+    handleClickDelete = event => {
+        axios.delete(this.url + 'filedelete/' + event.target.value , { params: { token: this.token}})
+            .then(response => {
+                this.componentDidMount();
+                this.setState({ isLoading: true})
+            })
+            .catch( error => {
+                console.log(error.toString());
+                this.setState({ toDashboard: true });
+            });
     };
 
     render() {
@@ -146,6 +135,33 @@ export default class FileUploadPage extends Component {
                                     </form>
                                     {this.renderRedirect()}
                                 </div>
+                            </div>
+                            <div style={{padding:10}}></div>
+                            <div className="table">
+                                <table className="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>image</th>
+                                        <th>Created</th>
+                                        <th className="text-center">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {this.state.files.map((files , index)=>
+                                        <tr key={files.id}>
+                                            <td>{index + 1}</td>
+                                            <td><img src={this.url + '/uploads/students/' + files.name} style={{height:50}} alt={files.name} /></td>
+                                            <td>
+                                                <Moment format="YYYY-MM-DD">{files.created_at}</Moment>
+                                            </td>
+                                            <td className="text-center">
+                                                <button value={files.id} className="btn btn-sm btn-danger" onClick={this.handleClickDelete} >Delete</button>
+                                            </td>
+                                        </tr>)
+                                    }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
