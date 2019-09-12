@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link, Redirect} from "react-router-dom";
+import TitleComponent from "../pages/title";
 
 
 export default class Header extends Component {
@@ -25,6 +26,7 @@ export default class Header extends Component {
         }
         return (
             <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
+                <TitleComponent title="React CRUD Login "></TitleComponent>
 
                 <Link to={'/'} className="navbar-brand mr-1">Start Bootstrap</Link>
 

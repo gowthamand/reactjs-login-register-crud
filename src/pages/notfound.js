@@ -23,7 +23,7 @@ class NotFound extends Component {
 
                             <h1 className="display-1">404</h1>
                             <p className="lead">Page not found. You can
-                                <a onClick={this.props.history.goBack}>go back</a>
+                                <a href={this.props.history.goBack} onClick={this.props.history.goBack}>go back</a>
                                 to the previous page, or
                                 <Link to={'/dashboard'}>return home</Link>.</p>
                         </div>

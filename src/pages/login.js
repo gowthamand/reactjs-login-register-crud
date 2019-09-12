@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
+import TitleComponent from "./title";
 
 export default class Login extends Component {
 
@@ -13,10 +14,10 @@ export default class Login extends Component {
     };
 
     handleEmailChange = event => {
-        this.setState({ email: event.target.value });
+        this.setState({email: event.target.value});
     };
     handlePwdChange = event => {
-        this.setState({ password: event.target.value });
+        this.setState({password: event.target.value});
     };
 
     handleSubmit = event => {
@@ -38,13 +39,13 @@ export default class Login extends Component {
             })
             .catch(error => {
                 console.log(error);
-                this.setState({ authError: true, isLoading: false });
+                this.setState({authError: true, isLoading: false});
             });
     };
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to='/dashboard' />
+            return <Redirect to='/dashboard'/>
         }
     };
 
@@ -52,6 +53,7 @@ export default class Login extends Component {
         const isLoading = this.state.isLoading;
         return (
             <div className="container">
+                <TitleComponent title="React CRUD Login "></TitleComponent>
                 <div className="card card-login mx-auto mt-5">
                     <div className="card-header">Login</div>
                     <div className="card-body">
@@ -67,7 +69,7 @@ export default class Login extends Component {
                             </div>
                             <div className="form-group">
                                 <div className="form-label-group">
-                                    <input type="password" className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputPassword" placeholder="******"  name="password" onChange={this.handlePwdChange} required/>
+                                    <input type="password" className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputPassword" placeholder="******" name="password" onChange={this.handlePwdChange} required/>
                                     <label htmlFor="inputPassword">Password</label>
                                     <div className="invalid-feedback">
                                         Please provide a valid Password.
@@ -77,7 +79,7 @@ export default class Login extends Component {
                             <div className="form-group">
                                 <div className="checkbox">
                                     <label>
-                                        <input type="checkbox" value="remember-me" />Remember Password
+                                        <input type="checkbox" value="remember-me"/>Remember Password
                                     </label>
                                 </div>
                             </div>
