@@ -17,4 +17,4 @@ You will also see any lint errors in the console.
 ##### `https://login-register-crud.herokuapp.com`
 
 ## `Please Support Us to develop more app's`
-### `pay` <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 1$</a>
+### `Please Donate` <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 1$</a>
