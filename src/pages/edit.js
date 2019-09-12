@@ -29,7 +29,7 @@ export default class EditPage extends Component {
                 document.getElementById('inputEmail').value = emp.email;
                 document.getElementById('inputLoca').value = emp.location;
                 document.getElementById('inputEmpId').value = emp.emp_id;
-                document.getElementById('inputComp').value = emp.name;
+                document.getElementById('inputComp').value = emp.company;
             })
             .catch(error => {
                 this.setState({ toDashboard: true });
