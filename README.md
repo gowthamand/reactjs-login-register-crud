@@ -10,7 +10,7 @@
 ##### username : gowthaman.nkl1@gmail.com , password : password
 
 
-# How to setup project
+## How to setup project
 ``` 
 1. git clone https://github.com/gowthamand/react-login-register-crud
 
