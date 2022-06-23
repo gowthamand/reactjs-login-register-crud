@@ -7,7 +7,7 @@
     "bootstrap": "^4.5.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
-    "moment": "^2.29.0",
+    "moment": "^2.29.2",
     "popper.js": "^1.15.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
