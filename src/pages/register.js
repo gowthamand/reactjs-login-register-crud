@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
@@ -26,7 +27,7 @@ export default class Register extends Component {
     handleSubmit = event => {
         event.preventDefault();
         this.setState({isLoading: true});
-        const url = 'https://gowtham-rest-api-crud.herokuapp.com/register';
+        const url = API_URL + 'register';
         const email = this.state.email;
         const password = this.state.password;
         const name = this.state.name;

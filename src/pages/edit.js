@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
@@ -8,7 +9,7 @@ export default class EditPage extends Component {
 
     constructor(props) {
         super(props);
-        this.url = 'https://gowtham-rest-api-crud.herokuapp.com/employees';
+        this.url = API_URL + 'employees';
         this.token = localStorage.getItem('token');
     }
 
@@ -42,7 +43,7 @@ export default class EditPage extends Component {
         event.preventDefault();
         this.setState({isLoading: true});
         const token = localStorage.getItem('token');
-        const url = 'https://gowtham-rest-api-crud.herokuapp.com/employees/'+ this.state.id;
+        const url = API_URL + 'employees/'+ this.state.id;
         const name = document.getElementById('inputName').value;
         const phone = document.getElementById('inputPhone').value;
         const email = document.getElementById('inputEmail').value;

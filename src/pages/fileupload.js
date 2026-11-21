@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
@@ -10,7 +11,7 @@ export default class FileUploadPage extends Component {
     constructor(props) {
         super(props);
         this.file = '';
-        this.url = 'https://gowtham-rest-api-crud.herokuapp.com/';
+        this.url = API_URL;
         this.token = localStorage.getItem('token');
     }
 

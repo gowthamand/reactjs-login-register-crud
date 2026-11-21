@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, { Component } from 'react';
 import Header from "../elements/header";
 import Sidebar from "../elements/sidebar";
@@ -13,7 +14,7 @@ export default class Index extends Component {
 
     constructor(props) {
         super(props);
-        this.url = 'https://gowtham-rest-api-crud.herokuapp.com/employees';
+        this.url = API_URL + 'employees';
         this.token = localStorage.getItem('token');
     }
 

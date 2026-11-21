@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, {Component} from 'react';
 import Header from "../elements/header";
 import Sidebar from "../elements/sidebar";
@@ -16,7 +17,7 @@ export default class AddPage extends Component {
         event.preventDefault();
         this.setState({isLoading: true});
         const token = localStorage.getItem('token');
-        const url = 'https://gowtham-rest-api-crud.herokuapp.com/employees';
+        const url = API_URL + 'employees';
         const name = document.getElementById('inputName').value;
         const phone = document.getElementById('inputPhone').value;
         const email = document.getElementById('inputEmail').value;

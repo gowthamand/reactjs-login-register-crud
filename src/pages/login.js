@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
@@ -24,7 +25,7 @@ export default class Login extends Component {
     handleSubmit = event => {
         event.preventDefault();
         this.setState({isLoading: true});
-        const url = 'https://gowtham-rest-api-crud.herokuapp.com/login';
+        const url = API_URL + 'login';
         const email = this.state.email;
         const password = this.state.password;
         let bodyFormData = new FormData();
