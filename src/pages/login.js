@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
 import TitleComponent from "./title";
+import {setSession} from "../auth";
 
 export default class Login extends Component {
 
@@ -33,10 +34,11 @@ export default class Login extends Component {
         bodyFormData.set('password', password);
         axios.post(url, bodyFormData)
             .then(result => {
-                if (result.data.status) {
-                    localStorage.setItem('token', result.data.token);
+                if (result.data.status && result.data.token) {
+                    setSession(result.data.token);
                     this.setState({redirect: true, isLoading: false});
-                    localStorage.setItem('isLoggedIn', true);
+                } else {
+                    this.setState({authError: true, isLoading: false});
                 }
             })
             .catch(error => {

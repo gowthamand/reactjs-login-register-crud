@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link, Redirect} from "react-router-dom";
 import TitleComponent from "../pages/title";
+import {clearSession} from "../auth";
 
 
 export default class Header extends Component {
@@ -15,8 +16,7 @@ export default class Header extends Component {
     };
 
     handleClickLogout(){
-        localStorage.removeItem('token');
-        localStorage.setItem('isLoggedIn', false);
+        clearSession();
         this.setState({ toDashboard: true });
     }
 

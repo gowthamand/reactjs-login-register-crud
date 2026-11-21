@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import {isAuthenticated} from './auth';
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import Index from "./pages/index";
@@ -9,6 +10,18 @@ import Register from "./pages/register";
 import NotFound from "./pages/notfound";
 import FileUploadPage from "./pages/fileupload";
 
+const PrivateRoute = ({component: Comp, ...rest}) => (
+    <Route {...rest} render={props =>
+        isAuthenticated() ? <Comp {...props} /> : <Redirect to='/' />
+    } />
+);
+
+const GuestRoute = ({component: Comp, ...rest}) => (
+    <Route {...rest} render={props =>
+        isAuthenticated() ? <Redirect to='/dashboard' /> : <Comp {...props} />
+    } />
+);
+
 class App extends Component {
 
     render() {
@@ -16,13 +29,13 @@ class App extends Component {
             <div className="App">
                 <Router>
                     <Switch>
-                        <Route exact path='/' component={Login} />
-                        <Route path='/dashboard' component={Dashboard} />
-                        <Route path='/index' component={Index}/>
-                        <Route path='/register' component={Register} />
-                        <Route path='/add' component={AddPage} />
-                        <Route path='/edit/' component={EditPage} />
-                        <Route path='/fileupload/' component={FileUploadPage} />
+                        <GuestRoute exact path='/' component={Login} />
+                        <PrivateRoute path='/dashboard' component={Dashboard} />
+                        <PrivateRoute path='/index' component={Index}/>
+                        <GuestRoute path='/register' component={Register} />
+                        <PrivateRoute path='/add' component={AddPage} />
+                        <PrivateRoute path='/edit/' component={EditPage} />
+                        <PrivateRoute path='/fileupload/' component={FileUploadPage} />
                         <Route path='*' component={NotFound} />
                     </Switch>
                 </Router>
