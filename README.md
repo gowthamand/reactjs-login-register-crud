@@ -88,6 +88,24 @@ src/assets/         SB Admin CSS/JS/vendor files
 **Login**
 ![Login](screenshots/login.png)
 
+**Register**
+![Register](screenshots/register.png)
+
+**Dashboard**
+![Dashboard](screenshots/dashboard.png)
+
+**Employee List**
+![Employee List](screenshots/employee-list.png)
+
+**Add Employee**
+![Add Employee](screenshots/add-employee.png)
+
+**Edit Employee**
+![Edit Employee](screenshots/edit-employee.png)
+
+**File Upload**
+![File Upload](screenshots/file-upload.png)
+
 ## Support
 
 If this project helped you, you can [buy me a coffee ($1)](https://paypal.me/gowthamdurai?locale.x=en_GB).
